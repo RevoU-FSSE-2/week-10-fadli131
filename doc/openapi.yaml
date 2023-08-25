@@ -1,0 +1,412 @@
+openapi: 3.0.0
+info:
+  title: Transfer Request Management API
+  description: API documentation for the Transfer Request Management system
+  version: 1.0.0
+servers:
+  - url: http://localhost:3002
+    description: Local server
+  - url : https://shy-pear-scarab-garb.cyclic.cloud
+    description: Cyclic server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                  default: 'maker1'
+                role:
+                  type: string
+                  enum: [admin, maker, approver]
+                  default: maker
+                password:
+                  type: string
+                  pattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$
+                  default: 'Password123'
+              required:
+                - username
+                - role
+                - password
+      responses:
+        '200':
+          description: User successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+                      role:
+                        type: string
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          
+
+  /auth/login:
+    post:
+      summary: Log in with username and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  default: 'maker1'
+                password:
+                  type: string
+                  default: 'Password123'
+
+      responses:
+        '200':
+          description: User successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: string
+                       
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /transfers:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Create a new transfer request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  default: 1000
+                currency:
+                  type: string
+                  default: 'USD'
+                sourceAccount:
+                  type: string
+                  default: '1234567890'
+                destinationAccount:
+                  type: string
+                  default: '0987654321'
+
+      responses:
+        '200':
+          description: Transfer request created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      amount:
+                        type: number
+                      currency:
+                        type: string
+                      sourceAccount:
+                        type: string
+                      destinationAccount:
+                        type: string
+                      status:         
+                        type: string  
+
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+        '403':
+          description: 'Permission denied'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get a list of transfer requests
+      responses:
+        '200':
+          description: 'List of transfer requests successfully retrieved'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    amount:
+                      type: number
+                    currency:
+                      type: string
+                    sourceAccount:
+                      type: string
+                    destinationAccount:
+                      type: string
+                    status:
+                      type: string
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+        '403':
+          description: 'Permission Denied'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /transfers/{id}:
+    patch:
+      security:
+        - bearerAuth: []
+      summary: Update the status of a transfer request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [rejected, approved]
+      responses:
+        '200':
+          description: 'Transfer status updated successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+        '404':
+          description: 'Transfer not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+        '500':
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Soft delete a transfer request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Transfer soft deleted successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+        '403':
+          description: 'Forbidden'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Forbidden'
+                  message:
+                    type: string
+
+        '404':
+          description: 'Transfer not found or already deleted'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+        '500':
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+
+  /transfers/history:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get transfer request history based on filters
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            default: '2023-08-25'
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            default: '2023-08-25'
+        - name: status
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+            default: [approved, rejected, pending]
+      responses:
+        '200':
+          description: 'Transfer history successfully retrieved'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    amount:
+                      type: number
+                    currency:
+                      type: string
+                    sourceAccount:
+                      type: string
+                    destinationAccount:
+                      type: string
+                    status:
+                      type: string
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+        '403':
+          description: 'Forbidden'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+        '500':
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+

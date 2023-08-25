@@ -19,9 +19,6 @@ const app = express();
 
 app.use(express.json());
 
-
-connectDB();
-
 app.get('/', (req, res) => {
     res.send('Transfer Request Management API');
 });
@@ -37,7 +34,7 @@ app.use(
 app.use(databaseMiddleware);
 
 app.use("/auth", authRouter);
-app.use("/transfers", authMiddleware, transfersRouter);
+app.use("/transfer", authmiddleware, transferRouter);
 
 app.use((err, req, res, next) => {
   console.log(err, `<=================== error ==================`);
@@ -48,6 +45,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3002, () => {
-    console.log("Server is running on port 3002");
+    console.log("Server is running on port 3003");
   });
   
