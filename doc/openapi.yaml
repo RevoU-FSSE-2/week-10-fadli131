@@ -112,7 +112,7 @@ paths:
                   error:
                     type: string
 
-  /transfers:
+  /transfer:
     post:
       security:
         - bearerAuth: []
@@ -223,7 +223,7 @@ paths:
                   error:
                     type: string
 
-  /transfers/{id}:
+  /transfer/{id}:
     patch:
       security:
         - bearerAuth: []
@@ -340,7 +340,7 @@ paths:
                     type: string
 
 
-  /transfers/history:
+  /transfer/history:
     get:
       security:
         - bearerAuth: []

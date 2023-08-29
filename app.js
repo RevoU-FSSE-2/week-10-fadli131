@@ -10,6 +10,7 @@ const yaml = require("yaml");
 const fs = require("fs");
 const OpenApiValidator = require("express-openapi-validator");
 const router = express.Router();
+const { MongoClient, ObjectId } = require("mongodb");
 
 const openApiPath = "doc/openapi.yaml";
 const file = fs.readFileSync(openApiPath, "utf8");
@@ -45,6 +46,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3002, () => {
-    console.log("Server is running on port 3003");
+    console.log("Server is running on port 3002");
   });
   
