@@ -9,7 +9,7 @@ RESTful API with expressjs, nodejs, and swagger
 👤 **Fadli Aryadinata**
 
 - GitHub: [@fadli131](https://github.com/fadli131)
-- Deployment Link (https://week9-fadli.cyclic.cloud/karyawan)
+- Deployment Link (https://calm-teal-bull-cape.cyclic.app/)
 
 ### Getting Started
 
@@ -25,49 +25,22 @@ The Financial Tracking API adheres to the principles of RESTful design to ensure
 
 ### Language used 
 - Javascript (NodeJS & ExpressJS)
-- MongoDB (NoSQL Database)
 
 ### Tools
 - VS Code
 - Git and Github    
 - Swagger UI
 - Postman
-- MongoDB
+- MongoDB (NoSQL Database)
+- Railway
+- Cyclic
 
-### HTTP Methods
-
-**Register New User**
-
-```http
-POST | https://localhost:3002/auth/register
+**Available Account**
+```
+{
+    "username" : "fadli",
+    "password" : "Fadli123",
+    "role" : "maker"
+}
 ```
 
-**Log In**
-
-```http
-POST | https://localhost:3002/auth/register
-```
-
-**Post Transfer**
-
-```http
-POST | https://localhost:3002/v1/transfer
-
-
-**Get All Transfer**
-
-```http
-POST | https://localhost:3002/v1/transfer/s
-```
-
-**Patching Transfer Status**
-
-```http
-PATCH | https://localhost:3002/v1/transfer/:id
-```
-
-**Delete Transfer by ID**
-
-```http
-DELETE | https://localhost:3002/v1/transfer/:id
-```
