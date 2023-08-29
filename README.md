@@ -19,7 +19,7 @@ The Financial Tracking API adheres to the principles of RESTful design to ensure
 
 1. **Resources**: The API treats financial entities such as transactions and accounts as resources, each accessible through a unique endpoint.
 
-2. **HTTP Methods**: HTTP methods such as GET, POST, PUT, PATCH, and DELETE are employed to interact with these resources.
+2. **HTTP Methods**: HTTP methods such as GET, POST, and DELETE are employed to interact with these resources.
 
 3. **Representation**: Data is exchanged in JSON format, allowing for structured and easy-to-parse information.
 
