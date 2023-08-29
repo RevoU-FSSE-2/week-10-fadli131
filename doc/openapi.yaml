@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:3002
     description: Local server
-  - url : https://shy-pear-scarab-garb.cyclic.cloud
+  - url : https://calm-teal-bull-cape.cyclic.app
     description: Cyclic server
 components:
   securitySchemes:
