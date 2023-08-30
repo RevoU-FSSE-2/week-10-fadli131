@@ -9,7 +9,7 @@ RESTful API with expressjs, nodejs, and swagger
 👤 **Fadli Aryadinata**
 
 - GitHub: [@fadli131](https://github.com/fadli131)
-- Deployment Link (https://calm-teal-bull-cape.cyclic.app/)
+- Deployment Link (https://calm-teal-bull-cape.cyclic.app/api-docs/)
 
 ### Getting Started
 
