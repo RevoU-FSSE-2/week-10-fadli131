@@ -4,7 +4,7 @@ info:
   description: API documentation for the Transfer Request Management system
   version: 1.0.0
 servers:
-  - url: http://localhost:3002
+  - url: http://localhost:3004
     description: Local server
   - url : https://calm-teal-bull-cape.cyclic.app
     description: Cyclic server
@@ -32,7 +32,7 @@ paths:
                   default: 'maker1'
                 role:
                   type: string
-                  enum: [admin, maker, approver]
+                  enum: [admin, maker, approver, customer]
                   default: maker
                 password:
                   type: string

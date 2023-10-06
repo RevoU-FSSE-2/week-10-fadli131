@@ -5,7 +5,7 @@ const { JWT_SIGN } = require("../config/jwt.js");
 const register = async (req, res) => {
   const { username, password, role } = req.body;
 
-  // const acceptedRoles = ["maker", "approver", "admin"];
+  const acceptedRoles = ["maker", "approver", "admin"];
 
   // if (!acceptedRoles.includes(role)) {
   //   return res.status(400).json({ error: "Invalid role" });
